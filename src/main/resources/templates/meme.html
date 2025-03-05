@@ -1,44 +1,51 @@
 <!DOCTYPE html>
 <html lang="de" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zufälliges Meme</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #f0f0f0;
-            padding: 20px;
-        }
-        img {
-            max-width: 500px;
-            border-radius: 10px;
-            box-shadow: 0px 4px 10px rgba(0,0,0,0.3);
-        }
-        button {
-            margin-top: 20px;
-            padding: 10px;
-            font-size: 16px;
-            cursor: pointer;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-    </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Meme-Generator mit Drag & Drop</title>
+    <!-- Externes CSS einbinden -->
+    <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-<h1>Dein zufälliges Meme</h1>
+<h1>Erstelle dein Meisterwerk</h1>
 
-<img th:src="@{${memePath}}" alt="Meme wird geladen..." />
+<div class="main-container">
+    <!-- MEME-CONTAINER (Bild + Overlays) -->
+    <div class="meme-container" id="memeContainer">
+        <!-- Das Meme-Bild wird via Thymeleaf dynamisch geladen -->
+        <img th:src="@{${memePath}}"
+             id="memeImage"
+             alt="Meme wird geladen..." />
+        <!-- Overlays werden per JavaScript erstellt -->
+    </div>
 
-<br>
-<button onclick="window.location.reload();">Neues Meme laden</button>
+    <!-- RECHTE SPALTE: Eingabefelder & Buttons -->
+    <div class="controls">
+        <!-- Button zum Hinzufügen eines neuen Textfeldes -->
+        <button onclick="addTextField()">Neues Textfeld hinzufügen</button>
 
+        <!-- Container für die dynamischen Textfelder -->
+        <div id="textFieldContainer"></div>
+
+        <!-- Buttons -->
+        <button onclick="updateMeme()">Update Meme</button>
+        <button onclick="saveMeme()">Speichern</button>
+
+        <!-- Bereich mit etwas Abstand für untere Buttons -->
+        <div class="bottom-buttons">
+            <button onclick="window.location.reload();">Neues Meme laden</button>
+            <button onclick="downloadMeme()">Meme downloaden</button>
+        </div>
+    </div>
+</div>
+
+<!-- Canvas zum Erstellen des Download-Bildes (versteckt) -->
+<canvas id="memeCanvas" width="600" height="400" style="display:none;"></canvas>
+
+<!-- Externe JavaScript-Dateien einbinden (Reihenfolge beachten!) -->
+<script src="script.js" defer></script>
+<script src="save.js" defer></script>
 </body>
 </html>
