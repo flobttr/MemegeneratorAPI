@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meme Generator - Spring Boot Integration</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        .meme-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+        canvas {
+            border: 1px solid black;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.3);
+            background-color: white;
+            width: 500px;
+            height: 500px;
+        }
+        .controls {
+            margin-top: 20px;
+        }
+        .controls button {
+            background-color: #ff6f61;
+            color: white;
+            cursor: pointer;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+        .controls button:hover {
+            background-color: #d95950;
+        }
+    </style>
+</head>
+<body>
+<h1>Meme Generator</h1>
+
+<!-- Meme Canvas -->
+<div class="meme-wrapper">
+    <canvas id="memeCanvas" width="500" height="500"></canvas>
+</div>
+
+<div class="controls">
+    <button onclick="downloadMeme()">Speichern</button>
+    <a href="/">Neues Meme laden</a>
+</div>
+
+<script>
+    const memeCanvas = document.getElementById("memeCanvas");
+    const ctx = memeCanvas.getContext("2d");
+
+    let img = new Image();
+    img.src = "[[${memePath}]]"; // Spring Boot liefert hier den Bildpfad
+
+    img.onload = function() {
+        drawMeme();
+    };
+
+    function drawMeme() {
+        ctx.clearRect(0, 0, memeCanvas.width, memeCanvas.height);
+        ctx.drawImage(img, 0, 0, memeCanvas.width, memeCanvas.height);
+    }
+
+    function downloadMeme() {
+        const link = document.createElement("a");
+        link.download = "meme.png";
+        link.href = memeCanvas.toDataURL("image/png");
+        link.click();
+    }
+</script>
+</body>
+</html>
