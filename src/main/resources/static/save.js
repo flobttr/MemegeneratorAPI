@@ -1,26 +1,27 @@
 function saveMeme() {
-    drawMemeWithText();  // Zeichnet das Meme (Basisbild + Texte) in das Canvas
-
-    // Hier legst du das Format fest – z. B. "image/png" oder "image/jpeg"
     const dataURL = memeCanvas.toDataURL("image/png");
 
-    fetch('/saveMeme', {
+    // Erstelle das Meme-Objekt
+    const meme = {
+        imageData: dataURL, // Komma hier eingefügt
+        // playerName und playerId optional; der Server füllt sie aus, falls nötig
+    };
+
+    fetch('/api/memes/save', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ imageData: dataURL })
+        body: JSON.stringify(meme)
     })
-        .then(response => response.json())
-        .then(data => {
-            if (data.filePath) {
-                alert('Meme gespeichert unter: ' + data.filePath);
-            } else {
-                alert('Meme konnte nicht gespeichert werden: ' + JSON.stringify(data));
-            }
+        .then(response => response.text())
+        .then(text => {
+            // Optional: Erfolgsmeldung anzeigen, z. B. mit alert(text);
+            // Danach sofort auf die neue Seite weiterleiten:
+            window.location.href = "/success.html"; // oder ein anderer Pfad zu deiner neuen Seite
         })
         .catch(error => {
-            console.error('Fehler beim Speichern:', error);
+            console.error('Fehler:', error);
             alert('Fehler beim Speichern des Memes.');
         });
 }

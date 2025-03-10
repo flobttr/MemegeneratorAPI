@@ -21,13 +21,13 @@ h1 {
     border: 2px solid #ccc;
     border-radius: 10px;
     box-shadow: 0px 4px 10px rgba(0,0,0,0.3);
-    padding: 20px; /* Abstand zum Rand */
+    padding: 20px;
 }
 
 /* Container fürs Bild (mit position: relative für Overlays) */
 .meme-container {
     position: relative;
-    width: 600px;       /* Feste Breite für das Meme */
+    width: 600px;
     margin-right: 20px;
 }
 
@@ -42,7 +42,7 @@ h1 {
 /* Rechte Spalte mit Eingabefeldern und Buttons */
 .controls {
     flex: 1;
-    padding: 20px; /* Abstand zwischen Rand und Feldern */
+    padding: 20px;
 }
 
 /* Container für dynamische Textfelder */
@@ -51,22 +51,26 @@ h1 {
     margin-bottom: 20px;
 }
 
-/* Zeile mit Text-Eingabe und Farbwähler */
+/* Zeile mit Text-Eingabe, Farbwähler und Schriftgrößenregler */
 .text-field-row {
     display: flex;
     align-items: center;
     margin-bottom: 10px;
 }
 
-.text-field-row input[type="text"] {
+/* Styling für das mehrzeilige Textfeld */
+.text-field-row textarea {
     flex: 1;
     padding: 8px;
     font-size: 14px;
     border: 1px solid #ccc;
     border-radius: 5px;
     margin-right: 10px;
+    resize: vertical;
+    height: 60px;
 }
 
+/* Farbeingabe */
 .text-field-row input[type="color"] {
     width: 50px;
     height: 34px;
@@ -74,6 +78,12 @@ h1 {
     background: transparent;
     cursor: pointer;
     margin-right: 10px;
+}
+
+/* Schriftgrößenregler (Range) */
+.text-field-row input[type="range"] {
+    margin-right: 10px;
+    width: 150px; /* Feste Breite, damit der Slider sichtbar wird */
 }
 
 /* Buttons */
@@ -95,25 +105,33 @@ h1 {
 
 /* Bereich für untere Buttons */
 .bottom-buttons {
-    margin-top: 30px; /* Abstand zum oberen Button */
+    margin-top: 30px;
     display: flex;
-    gap: 10px;        /* Abstand zwischen den Buttons */
+    gap: 10px;
 }
 
 /* Meme-Text-Overlays */
 .meme-text {
-    position: absolute;   /* Ermöglicht freies Verschieben */
-    left: 50px;           /* Standardstartposition */
-    top: 20px;            /* Standardstartposition */
+    position: absolute;
+    left: 50px;
+    top: 20px;
     color: white;
     font-family: Impact, sans-serif;
-    font-size: 2em;
+    font-size: 2em; /* Wird durch den Slider überschrieben */
     text-shadow: 2px 2px 2px black;
-    cursor: grab;         /* "Grab-Cursor" anzeigen */
-    white-space: nowrap;  /* Text in einer Zeile */
-    user-select: none;    /* Verhindert Textmarkierung beim Ziehen */
+    cursor: grab;
+    white-space: pre-wrap;
+    user-select: none;
 }
 
 .meme-text:active {
-    cursor: grabbing;     /* Wenn aktiv gezogen wird */
+    cursor: grabbing;
+}
+
+/* Stil für deaktivierte Buttons */
+.controls button:disabled {
+    background-color: #cccccc;
+    color: #666666;
+    cursor: not-allowed;
+    opacity: 0.7;
 }

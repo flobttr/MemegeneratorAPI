@@ -1,0 +1,47 @@
+body {
+    margin: 0;
+    overflow: hidden; /* verhindert Scrollen */
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+}
+
+/* Statischer Inhalt, der immer sichtbar ist */
+.static-content {
+    text-align: center;
+    margin-top: 20px;
+    position: relative;
+    z-index: 2;
+}
+
+/* Container, der den bewegten Text enthält – jetzt zentral positioniert */
+.moving-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 1;
+    /* Die Animation kombiniert die Zentrierung und den horizontalen Versatz */
+    animation: moveText 10s linear infinite;
+}
+
+/* Animation: Der Container oszilliert sanft von links nach rechts */
+@keyframes moveText {
+    0% {
+        transform: translate(-50%, -50%) translateX(-300px);
+    }
+    50% {
+        transform: translate(-50%, -50%) translateX(300px);
+    }
+    100% {
+        transform: translate(-50%, -50%) translateX(-300px);
+    }
+}
+
+/* Stil für den Text im bewegten Container */
+.moving-text {
+    padding: 20px;
+    font-size: 38px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    white-space: nowrap; /* verhindert Zeilenumbruch */
+}

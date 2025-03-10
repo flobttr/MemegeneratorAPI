@@ -14,11 +14,9 @@
 <div class="main-container">
     <!-- MEME-CONTAINER (Bild + Overlays) -->
     <div class="meme-container" id="memeContainer">
-        <!-- Das Meme-Bild wird via Thymeleaf dynamisch geladen -->
         <img th:src="@{${memePath}}"
              id="memeImage"
              alt="Meme wird geladen..." />
-        <!-- Overlays werden per JavaScript erstellt -->
     </div>
 
     <!-- RECHTE SPALTE: Eingabefelder & Buttons -->
@@ -29,11 +27,10 @@
         <!-- Container für die dynamischen Textfelder -->
         <div id="textFieldContainer"></div>
 
-        <!-- Buttons -->
-        <button onclick="updateMeme()">Update Meme</button>
-        <button onclick="saveMeme()">Speichern</button>
+        <!-- Update-Button entfernt – Aktualisierung erfolgt automatisch -->
 
-        <!-- Bereich mit etwas Abstand für untere Buttons -->
+        <button id="abgebenButton" onclick="this.disabled = true; saveMeme()">Abgeben</button>
+
         <div class="bottom-buttons">
             <button onclick="window.location.reload();">Neues Meme laden</button>
             <button onclick="downloadMeme()">Meme downloaden</button>
@@ -44,7 +41,6 @@
 <!-- Canvas zum Erstellen des Download-Bildes (versteckt) -->
 <canvas id="memeCanvas" width="600" height="400" style="display:none;"></canvas>
 
-<!-- Externe JavaScript-Dateien einbinden (Reihenfolge beachten!) -->
 <script src="script.js" defer></script>
 <script src="save.js" defer></script>
 </body>

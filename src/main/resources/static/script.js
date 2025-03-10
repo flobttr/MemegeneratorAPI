@@ -1,4 +1,4 @@
-/* Array zur Speicherung der Text- und Farbeingaben und der zugehörigen Overlay-Elemente */
+/* Array zur Speicherung der Text-, Farb- und Schriftgrößeneingaben sowie der zugehörigen Overlay-Elemente */
 let textFields = [];
 let memeCanvas, ctx, img;
 
@@ -12,26 +12,38 @@ window.onload = function() {
     addTextField();
 };
 
-// Neues Textfeld (Text + Farbe) hinzufügen
+// Neues Textfeld (Text, Farbe, Schriftgröße) hinzufügen
 function addTextField() {
     const row = document.createElement('div');
     row.className = 'text-field-row';
 
-    const textInput = document.createElement('input');
-    textInput.type = 'text';
+    // Mehrzeiliges Textfeld
+    const textInput = document.createElement('textarea');
     textInput.placeholder = 'Text eingeben...';
+    textInput.style.resize = "vertical";
+    textInput.addEventListener('input', updateMeme);
 
+    // Farbeingabe
     const colorInput = document.createElement('input');
     colorInput.type = 'color';
-    colorInput.value = '#ffffff'; // Standardfarbe: Weiß
+    colorInput.value = '#ffffff';
+    colorInput.addEventListener('input', updateMeme);
+
+    // Schriftgrößeneingabe (Slider)
+    const fontSizeInput = document.createElement('input');
+    fontSizeInput.type = 'range';
+    fontSizeInput.min = '10';
+    fontSizeInput.max = '100';
+    fontSizeInput.value = '24'; // Standard-Schriftgröße in Pixel
+    fontSizeInput.addEventListener('input', updateMeme);
 
     row.appendChild(textInput);
     row.appendChild(colorInput);
+    row.appendChild(fontSizeInput);
 
     document.getElementById('textFieldContainer').appendChild(row);
 
-    // overlay: null => später wird hier das DOM-Element (Overlay) gespeichert
-    textFields.push({ textInput, colorInput, overlay: null });
+    textFields.push({ textInput, colorInput, fontSizeInput, overlay: null });
 }
 
 // Erzeugt oder aktualisiert die Overlays, ohne deren Position zurückzusetzen
@@ -39,35 +51,35 @@ function updateMeme() {
     const memeContainer = document.getElementById('memeContainer');
 
     textFields.forEach((field, index) => {
-        const textValue = field.textInput.value.trim();
+        const textValue = field.textInput.value;
         const colorValue = field.colorInput.value;
+        const fontSizeValue = field.fontSizeInput.value; // Schriftgröße in Pixel
 
-        // Falls bereits ein Overlay existiert, aktualisieren wir nur Text und Farbe
         if (field.overlay) {
-            if (textValue) {
+            if (textValue.trim()) {
                 field.overlay.innerText = textValue;
                 field.overlay.style.color = colorValue;
+                field.overlay.style.fontSize = fontSizeValue + 'px';
             } else {
-                // Wenn kein Text mehr vorhanden ist, entfernen wir das Overlay
                 field.overlay.remove();
                 field.overlay = null;
             }
         } else {
-            // Wenn noch kein Overlay existiert und Text vorhanden ist, erstellen wir es
-            if (textValue) {
+            if (textValue.trim()) {
                 const overlay = document.createElement('div');
                 overlay.className = 'meme-text';
                 overlay.innerText = textValue;
                 overlay.style.color = colorValue;
+                overlay.style.fontSize = fontSizeValue + 'px';
 
-                // Setze beim Erstellen eine Standardposition (z.B. etwas nach unten versetzt)
+                // Standardposition (etwas nach unten versetzt)
                 overlay.style.top = (20 + index * 50) + 'px';
                 overlay.style.left = '50px';
 
                 memeContainer.appendChild(overlay);
                 field.overlay = overlay;
 
-                // Overlay verschiebbar machen und auf Container begrenzen
+                // Overlay verschiebbar machen (innerhalb des Containers)
                 makeDraggable(overlay, memeContainer);
             }
         }
@@ -82,12 +94,8 @@ function makeDraggable(element, container) {
 
     element.addEventListener('mousedown', (e) => {
         isDragging = true;
-
-        // Abstand zwischen Mauszeiger und Elementrand
         offsetX = e.clientX - element.getBoundingClientRect().left;
         offsetY = e.clientY - element.getBoundingClientRect().top;
-
-        // Verhindert, dass andere Elemente (z.B. das Bild) das Event abfangen
         e.stopPropagation();
         e.preventDefault();
     });
@@ -95,28 +103,20 @@ function makeDraggable(element, container) {
     document.addEventListener('mousemove', (e) => {
         if (!isDragging) return;
 
-        // Positionen relativ zum Container berechnen
         const containerRect = container.getBoundingClientRect();
         const elemRect = element.getBoundingClientRect();
 
-        // Neue Position (noch unbeschränkt)
         let newLeft = e.clientX - containerRect.left - offsetX;
         let newTop = e.clientY - containerRect.top - offsetY;
 
-        // Begrenzungen ermitteln
         const maxLeft = containerRect.width - elemRect.width;
         const maxTop = containerRect.height - elemRect.height;
 
-        // Linke Begrenzung
         if (newLeft < 0) newLeft = 0;
-        // Obere Begrenzung
         if (newTop < 0) newTop = 0;
-        // Rechte Begrenzung
         if (newLeft > maxLeft) newLeft = maxLeft;
-        // Untere Begrenzung
         if (newTop > maxTop) newTop = maxTop;
 
-        // Anwenden
         element.style.left = newLeft + 'px';
         element.style.top = newTop + 'px';
     });
@@ -142,24 +142,28 @@ function downloadMeme() {
  * Damit sind alle Texte im finalen Download-Bild sichtbar
  */
 function drawMemeWithText() {
-    // Basisbild zeichnen
     ctx.clearRect(0, 0, memeCanvas.width, memeCanvas.height);
     ctx.drawImage(img, 0, 0, memeCanvas.width, memeCanvas.height);
 
-    // Für jedes Textfeld, das ein Overlay hat, Text ins Canvas zeichnen
     textFields.forEach(field => {
         if (field.overlay) {
             const overlay = field.overlay;
-            ctx.font = "24px Arial";
+            const fontSize = overlay.style.fontSize || "24px";
+            ctx.font = fontSize + " Arial";
             ctx.fillStyle = overlay.style.color || "white";
-            ctx.textAlign = "left"; // oder "center", je nach Wunsch
+            ctx.textAlign = "left";
 
-            // Position (relativ zum Container) aus den style-Angaben
             const x = parseInt(overlay.style.left, 10);
             const y = parseInt(overlay.style.top, 10);
 
-            // Text etwas tiefer setzen, damit es wie "mittig" wirkt
-            ctx.fillText(overlay.innerText, x, y + 30);
+            // Textzeilen (bei Zeilenumbrüchen) einlesen
+            const lines = overlay.innerText.split('\n');
+            const fontSizeNumber = parseInt(fontSize, 10);
+            const lineHeight = fontSizeNumber * 1.2;
+
+            lines.forEach((line, index) => {
+                ctx.fillText(line, x, y + lineHeight + (index * lineHeight));
+            });
         }
     });
 }

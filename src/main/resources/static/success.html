@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Erfolgreich Gespeichert</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden; /* verhindert Scrollen */
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        /* Statischer Inhalt, der immer sichtbar ist */
+        .static-content {
+            text-align: center;
+            margin-top: 20px;
+            position: relative;
+            z-index: 2;
+        }
+        /* Container, der den vordefinierten Text enthält und sich bewegt */
+        .moving-container {
+            position: absolute;
+            top: 60%; /* vertikale Position, anpassbar */
+            transform: translateY(-50%);
+            animation: moveText 10s linear infinite;
+            z-index: 1;
+        }
+        /* Animation: Bewegt den Container von links nach rechts */
+        @keyframes moveText {
+            0% {
+                left: -300px;
+            }
+            100% {
+                left: 100%;
+            }
+        }
+        /* Stil für den Text im bewegten Container */
+        .moving-text {
+            padding:20px;
+            font-size: 38px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            white-space: nowrap; /* Verhindert Zeilenumbruch */
+        }
+    </style>
+</head>
+<body>
+<div class="static-content">
+    <h1>Meme erfolgreich gespeichert!</h1>
+    <p>Solange du auf das Bewertungssystem wartest, kannst du den bewegenden Text bestaunen:</p>
+</div>
+<div class="moving-container">
+    <div class="moving-text">
+        Jungs, wir haben so viel effort hier rein gesteckt, BITTE GÖNNT 1.0!!
+    </div>
+</div>
+</body>
+</html>
+
