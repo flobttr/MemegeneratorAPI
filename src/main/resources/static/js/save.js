@@ -18,7 +18,7 @@ function saveMeme() {
         .then(text => {
             // Optional: Erfolgsmeldung anzeigen, z. B. mit alert(text);
             // Danach sofort auf die neue Seite weiterleiten:
-            window.location.href = "/success.html"; // oder ein anderer Pfad zu deiner neuen Seite
+            window.location.href = "/html/success.html"; // oder ein anderer Pfad zu deiner neuen Seite
         })
         .catch(error => {
             console.error('Fehler:', error);

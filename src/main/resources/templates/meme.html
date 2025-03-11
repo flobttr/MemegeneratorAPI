@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Meme-Generator mit Drag & Drop</title>
     <!-- Externes CSS einbinden -->
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
 </head>
 <body>
 
@@ -22,17 +22,16 @@
     <!-- RECHTE SPALTE: Eingabefelder & Buttons -->
     <div class="controls">
         <!-- Button zum Hinzufügen eines neuen Textfeldes -->
-        <button onclick="addTextField()">Neues Textfeld hinzufügen</button>
+        <button onclick="addTextField()">Beschrifte mich !</button>
 
         <!-- Container für die dynamischen Textfelder -->
         <div id="textFieldContainer"></div>
 
         <!-- Update-Button entfernt – Aktualisierung erfolgt automatisch -->
-
         <button id="abgebenButton" onclick="this.disabled = true; saveMeme()">Abgeben</button>
 
         <div class="bottom-buttons">
-            <button onclick="window.location.reload();">Neues Meme laden</button>
+            <button onclick="window.location.reload();">Gib mir was neues!</button>
             <button onclick="downloadMeme()">Meme downloaden</button>
         </div>
     </div>
@@ -41,7 +40,14 @@
 <!-- Canvas zum Erstellen des Download-Bildes (versteckt) -->
 <canvas id="memeCanvas" width="600" height="400" style="display:none;"></canvas>
 
-<script src="script.js" defer></script>
-<script src="save.js" defer></script>
+<!-- JavaScript-Dateien einbinden -->
+<script th:src="@{/js/globals.js}"></script>
+<script th:src="@{/js/makeDraggable.js}"></script>
+<script th:src="@{/js/addTextField.js}"></script>
+<script th:src="@{/js/updateMeme.js}"></script>
+<script th:src="@{/js/drawMemeWithText.js}"></script>
+<script th:src="@{/js/downloadMeme.js}"></script>
+<script th:src="@{/js/onload.js}"></script>
+<script th:src="@{/js/save.js}" defer></script>
 </body>
 </html>
