@@ -1,12 +1,33 @@
+/* save.js */
+/**
+ * Speichert das aktuelle Meme, indem es den Inhalt des Canvas als Bild exportiert,
+ * Spieler- und Lobby-Daten aus dem localStorage abruft und diese in einem Meme-Objekt zusammenfasst.
+ * Dieses Objekt wird dann per POST an den Server gesendet.
+ */
 function saveMeme() {
-    const dataURL = memeCanvas.toDataURL("image/png");
+    // Konvertiere den Canvas-Inhalt in einen Data-URL (als JPG)
+    const dataURL = memeCanvas.toDataURL("image/jpg");
 
-    // Erstelle das Meme-Objekt
+    // Hole und parse die gespeicherten Nutzerdaten aus dem localStorage
+    const userData = localStorage.getItem("userData");
+    const user = JSON.parse(userData);
+    const username = user.username;
+    const userId = user.userId;
+
+    // Hole und parse die gespeicherten Lobby-Daten aus dem localStorage
+    const lobbyData = localStorage.getItem("lobbyData");
+    const lobby = JSON.parse(lobbyData);
+    const lobbyCode = lobby.lobbyCode;
+
+    // Erstelle ein Meme-Objekt mit allen benötigten Informationen
     const meme = {
-        imageData: dataURL, // Komma hier eingefügt
-        // playerName und playerId optional; der Server füllt sie aus, falls nötig
+        imageData: dataURL,
+        playerName: username,
+        playerId: userId,
+        lobbyCode: lobbyCode
     };
 
+    // Sende das Meme-Objekt per POST an den Server-Endpunkt zum Speichern
     fetch('/api/memes/save', {
         method: 'POST',
         headers: {
@@ -16,9 +37,9 @@ function saveMeme() {
     })
         .then(response => response.text())
         .then(text => {
-            // Optional: Erfolgsmeldung anzeigen, z. B. mit alert(text);
-            // Danach sofort auf die neue Seite weiterleiten:
-            window.location.href = "/html/success.html"; // oder ein anderer Pfad zu deiner neuen Seite
+            // Optional: Zeige eine Erfolgsmeldung an (z.B. alert(text));
+            // Leite anschließend den Benutzer zur Erfolgsseite weiter
+            window.location.replace("/html/success.html");
         })
         .catch(error => {
             console.error('Fehler:', error);

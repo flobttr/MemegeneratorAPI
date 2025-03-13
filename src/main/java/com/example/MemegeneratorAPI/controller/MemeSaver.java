@@ -1,55 +1,53 @@
 package com.example.MemegeneratorAPI.controller;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
+import com.example.MemegeneratorAPI.model.Meme;
 
-import java.util.Map;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Base64;
-import java.util.HashMap;
+/**
+ * Service zum Speichern eines Memes, welcher intern einen REST-Aufruf an einen anderen Endpunkt
+ * (hier: DummyLobbyController) durchführt.
+ */
 
-@RestController
+@Service
 public class MemeSaver {
 
-    // Liest den Pfad aus der application.properties: meme.storage.location
-    @Value("${meme.storage.location}")
-    private String memeStorageLocation;
+    // RestTemplate zum Durchführen von HTTP-Anfragen
+    private final RestTemplate restTemplate;
 
-    // Endpunkt zum Speichern des Memes
+/**
+ * Konstruktor, der ein RestTemplate über den RestTemplateBuilder erstellt.
+ */
+    public MemeSaver(RestTemplateBuilder restTemplateBuilder) {
+
+        this.restTemplate = restTemplateBuilder.build();
+    }
+
+/**
+ * Endpunkt zum Speichern des Memes.
+ * Führt einen HTTP POST-Request an den Lobby-Endpunkt aus, um das Meme weiterzuleiten.
+ */
     @PostMapping("/saveMeme")
-    public ResponseEntity<Map<String,Object>> saveMeme(@RequestBody Map<String, String> payload){
-        // Der Key "imageData" enthält den Base64-String aus dem Frontend
-        String imageData = payload.get("imageData");
+    public void saveMeme(@RequestBody Meme meme) {
 
-        // Bestimme den MIME-Typ anhand des Data-URL-Prefix
-        String mimeType = imageData.substring(5, imageData.indexOf(";"));  // z.B. "image/png" oder "image/jpeg"
-        String extension = mimeType.equals("image/png") ? ".png" : mimeType.equals("image/jpeg") ? ".jpg" : "";
-
-        // Entferne den "data:image/png;base64,"-Teil
-        String base64Image = imageData.contains(",") ? imageData.split(",")[1] : imageData;
+        // URL des Lobby-Controllers, an den das Meme gesendet wird
+        String lobbyUrl = "http://localhost:8080/api/lobbyController/addMeme";
 
         try {
-            byte[] imageBytes = Base64.getDecoder().decode(base64Image);
-            String fileName = "meme_" + System.currentTimeMillis() + extension;
-            Path outputPath = Paths.get(memeStorageLocation, fileName);
-            Files.createDirectories(outputPath.getParent());
-            Files.write(outputPath, imageBytes);
-
-            Map<String, Object> response = new HashMap<>();
-            response.put("filePath", outputPath.toAbsolutePath().toString());
-            return ResponseEntity.ok(response);
-        } catch (IOException e) {
-            e.printStackTrace();
-            Map<String, Object> response = new HashMap<>();
-            response.put("error", "Fehler beim Speichern des Bildes");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+            // Senden des Meme-Objekts per POST und Überprüfung des Antwortcodes
+            ResponseEntity<String> response = restTemplate.postForEntity(lobbyUrl, meme, String.class);
+            if (response.getStatusCode().is2xxSuccessful()) {
+                System.out.println("Meme sent to lobby.");
+            } else {
+                System.err.println("Error during transmitting the meme " + response.getBody());
+            }
+        } catch (Exception e) {
+            // Fehlerbehandlung: Ausgabe der Fehlermeldung
+            System.err.println("Error " + e.getMessage());
         }
     }
 }

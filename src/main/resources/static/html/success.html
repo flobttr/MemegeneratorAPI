@@ -36,7 +36,7 @@
         }
         /* Stil für den Text im bewegten Container */
         .moving-text {
-            padding:20px;
+            padding: 20px;
             font-size: 38px;
             background-color: rgba(255, 255, 255, 0.8);
             border: 1px solid #ccc;
@@ -55,6 +55,14 @@
         Jungs, wir haben so viel effort hier rein gesteckt, BITTE GÖNNT 1.0!!
     </div>
 </div>
+<!-- Verhindert das Zurückgehen im Browser -->
+<script>
+    // Neuen State in den Verlauf einfügen
+    history.pushState(null, null, location.href);
+    // Beim Zurück-Navigieren wird wieder derselbe State eingefügt
+    window.addEventListener('popstate', function (event) {
+        history.pushState(null, null, location.href);
+    });
+</script>
 </body>
 </html>
-

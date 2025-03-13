@@ -1,46 +1,64 @@
 <!DOCTYPE html>
 <html lang="de" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <!-- Meta-Informationen zum Dokument -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Meme-Generator mit Drag & Drop</title>
-    <!-- Externes CSS einbinden -->
+
+    <!-- Einbinden des externen CSS-Stylesheets über Thymeleaf.
+         Der Ausdruck @{/css/style.css} löst den korrekten Pfad zur CSS-Datei auf. -->
     <link rel="stylesheet" th:href="@{/css/style.css}" />
 </head>
 <body>
 
+<!-- Überschrift der Seite -->
 <h1>Erstelle dein Meisterwerk</h1>
 
+<!-- Hauptcontainer, der den Meme-Bereich und die Bedienelemente (Controls) enthält -->
 <div class="main-container">
-    <!-- MEME-CONTAINER (Bild + Overlays) -->
+
+    <!-- Meme-Container: Hier wird das Meme-Bild und die darüber liegenden Text-Overlays angezeigt -->
     <div class="meme-container" id="memeContainer">
+
+        <!-- Das Bild wird über Thymeleaf geladen. Der Ausdruck ${memePath} wird im Controller gesetzt.
+            Falls das Bild nicht geladen werden kann, wird der Alt-Text angezeigt. -->
         <img th:src="@{${memePath}}"
              id="memeImage"
              alt="Meme wird geladen..." />
     </div>
 
-    <!-- RECHTE SPALTE: Eingabefelder & Buttons -->
+    <!-- Rechte Spalte: Enthält alle Eingabefelder und Buttons für den Meme-Generator -->
     <div class="controls">
-        <!-- Button zum Hinzufügen eines neuen Textfeldes -->
+        <!-- Button zum Hinzufügen eines neuen Textfeldes.
+             Beim Klick wird die JavaScript-Funktion addTextField() aufgerufen. -->
         <button onclick="addTextField()">Beschrifte mich !</button>
 
-        <!-- Container für die dynamischen Textfelder -->
+        <!-- Container für die dynamisch erzeugten Textfelder, die vom JavaScript-Code hinzugefügt werden -->
         <div id="textFieldContainer"></div>
 
-        <!-- Update-Button entfernt – Aktualisierung erfolgt automatisch -->
+        <!-- Button zum Speichern/Abgeben des Memes.
+             Beim Klick wird die saveMeme()-Funktion aufgerufen und der Button wird deaktiviert, um Mehrfachklicks zu vermeiden. -->
         <button id="abgebenButton" onclick="this.disabled = true; saveMeme()">Abgeben</button>
 
+        <!-- Zusätzliche Buttons im unteren Bereich der Controls -->
         <div class="bottom-buttons">
+
+            <!-- Button zum Neuladen der Seite, um ein neues Meme zu generieren -->
             <button onclick="window.location.reload();">Gib mir was neues!</button>
+
+            <!-- Button zum Herunterladen des erstellten Memes.
+                 Ruft die downloadMeme()-Funktion auf, die das Meme als Bild zum Download anbietet. -->
             <button onclick="downloadMeme()">Meme downloaden</button>
         </div>
     </div>
 </div>
 
-<!-- Canvas zum Erstellen des Download-Bildes (versteckt) -->
+<!-- Verstecktes Canvas-Element, das zum Erstellen des Download-Bildes genutzt wird.
+     Das Canvas wird im JavaScript initialisiert und zum Zeichnen des Memes mit allen Text-Overlays verwendet. -->
 <canvas id="memeCanvas" width="600" height="400" style="display:none;"></canvas>
 
-<!-- JavaScript-Dateien einbinden -->
+<!-- Einbinden der JavaScript-Dateien, die die Funktionalitäten des Meme-Generators bereitstellen -->
 <script th:src="@{/js/globals.js}"></script>
 <script th:src="@{/js/makeDraggable.js}"></script>
 <script th:src="@{/js/addTextField.js}"></script>

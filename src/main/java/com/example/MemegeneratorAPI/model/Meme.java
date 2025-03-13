@@ -1,62 +1,44 @@
 package com.example.MemegeneratorAPI.model;
 
+/**
+ * Modellklasse für ein Meme.
+ * Beinhaltet Bilddaten, Spielerinformationen und den Lobby-Code.
+ */
+
 public class Meme {
+    private final String imageData;
+    private final String playerName;
+    private final String playerId;
+    private final String lobbyCode;
 
-    private String id;      // jetzt als String
-    private String title;   // neuer Titel, z. B. "Meme von Player <id>"
-    private String imageData;
-    private String playerName;
-    private String playerId;
+    //Konstruktor zum Erstellen eines Meme-Objekts
 
-    // Konstruktoren
-    public Meme() {}
-
-    public Meme(String id, String title, String imageData, String playerName, String playerId) {
-        this.id = id;
-        this.title = title;
+    public Meme(String imageData, String playerName, String playerId, String lobbyCode) {
+        this.lobbyCode = lobbyCode;
         this.imageData = imageData;
         this.playerName = playerName;
         this.playerId = playerId;
     }
 
-    // Getter/Setter
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
+    // Getter-Methoden zum Abrufen der einzelnen Eigenschaften
 
     public String getImageData() {
+
         return imageData;
     }
 
-    public void setImageData(String imageData) {
-        this.imageData = imageData;
-    }
-
     public String getPlayerName() {
+
         return playerName;
     }
 
-    public void setPlayerName(String playerName) {
-        this.playerName = playerName;
-    }
-
     public String getPlayerId() {
+
+
         return playerId;
     }
 
-    public void setPlayerId(String playerId) {
-        this.playerId = playerId;
+    public String getLobbyCode() {
+        return lobbyCode;
     }
 }
