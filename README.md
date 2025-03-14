@@ -58,7 +58,7 @@ Bei diesem Projekt handelt es sich um eine Teilkomponente des Fake-It-Meme Syste
 ### Meme abgegeben 
 1. Nachdem man auf den Button **"Abgeben"** gedrückt hat, wird der Spieler auf eine html Seite geleite (**sucess.html**), auf der einfach ein Text Container dauerhaft von links nach rechts läuft.
 
-## 4.) Bekannte Probleme als auch Abweichungen vom ACD
+## 4.) Bekannte Probleme & Abweichungen vom ACD
 Im folgenden Kapitel werden zeurst Probleme, die im bestehenden Code noch auftreten, als auch Abweichungen zum ACD beschrieben.
 
 ### Probleme
