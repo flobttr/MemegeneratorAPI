@@ -18,14 +18,19 @@ Dieses Projekt stellt eine einfache Meme-Generator-Anwendung bereit, die sowohl 
 ## 2) Installation und Setup
 
 ### Voraussetzungen
-- **Java JDK 11** oder höher
-- **Maven** oder **Gradle** (abhängig von der Projektkonfiguration)
+- **Mindestens die Java JDK 21 muss instaliert sein
+- **Maven** Projekt muss isntaliert werden 
 - Ein Webserver, der Spring Boot-Anwendungen ausführen kann
 
 ### Schritte zur Installation
-1. **Repository klonen:**  
-   ```bash
-   git clone https://github.com/yourusername/MemeGenerator.git
+1. **Repository klonen**
+2. **Projekt öffnen**
+   - Dazu ist eine beliebige Umgebung erforderlich, die ein Sprinboot Projekt öffnen kann (Bsp.: VS Cod/ Intelij)
+   - Über die Entwikclungsumgebung den Ordner öffen, indem das Repository abgelegt wurde, dann sollte sich das Projekt öffnen.
+   - Nun kann man unter ('src/main/java/com/example/MemegeneratorAPI')  die verschieden Java Klassen, aus denen sich das Backend zusammensetzt anschauen
+   - Unter dem Pfad ('src/main/resources/static findet man die css/html/js') Datein. Ebenfalls findet man auch die MemeTemplates in dem Ordner ('/memeTemplates') .
+   - Unter dem Pfad ('src/main/resources/templates)' wurde die "meme.html" abgelegt.
+   
 
 ## 3. Anleitung wie die Komponente zu bedienen ist
 ### Nutzung des Web-Frontends
@@ -46,50 +51,11 @@ Dieses Projekt stellt eine einfache Meme-Generator-Anwendung bereit, die sowohl 
 5. Der `MemeApiController` empfängt das Meme und leitet es über den `MemeSaver` an den Lobby-Endpunkt weiter.
 6. Bei erfolgreicher Speicherung erfolgt eine Weiterleitung zur Erfolgsseite.
 
-## Nutzung der REST-API
 
-### Memes per API speichern:
-Sende einen HTTP-`POST`-Request an `http://localhost:8080/api/memes/save` mit einem JSON-Objekt, das folgende Felder enthält:
 
-```json
-{
-  "imageData": "Data URL des Memes",
-  "playerName": "Name des Spielers",
-  "playerId": "ID des Spielers",
-  "lobbyCode": "Code der Lobby"
-}
-```
 
-## Unterschiede: Prototyp vs. perfektes Modell
 
-### Prototyp
 
-#### Funktionalität:
-- Fokus auf den grundlegenden Ablauf: Meme wird erstellt, per `POST` gesendet und an den Lobby-Endpunkt weitergeleitet.
-- Einfache Implementierung der REST- und MVC-Komponenten.
-
-#### Benutzeroberfläche:
-- Basis-Frontend mit minimalem Styling und wenigen interaktiven Elementen.
-
-#### Fehlerbehandlung:
-- Einfache Logging- und Fehlerbehandlung; keine umfangreichen Validierungen.
-
-#### Datenhaltung:
-- Möglicherweise wird der Lobby-Endpunkt nur simuliert, ohne eine echte Datenbankintegration.
-
-### Perfektes Modell
-
-#### Funktionalität:
-- Erweiterte Features, wie z. B. eine voll integrierte Datenbank zur Speicherung der Meme-Daten.
-- Erweiterte Validierung und Fehlerbehandlung in der REST-API.
-
-#### Benutzeroberfläche:
-- Professionell gestaltetes Frontend (möglicherweise mit modernen Frameworks wie React) mit reichhaltiger Interaktivität und ansprechendem Design.
-
-#### Skalierbarkeit:
-- Optimierte Architektur zur Handhabung hoher Benutzerzahlen und Anfragen, inklusive Caching, Lastverteilung und Monitoring.
-
-#### Sicherheit:
 - Erweiterte Sicherheitsmaßnahmen, wie z. B. Authentifizierung, Autorisierung und HTTPS.
 
 #### Dokumentation und Tests:
