@@ -1,6 +1,6 @@
 # MemeGenerator
 
-Dieses Projekt stellt eine einfache Meme-Generator-Anwendung bereit, die sowohl eine REST-Schnittstelle als auch ein Web-Frontend bietet. Über die REST-API können Memes (z. B. mit Beschriftung) per POST-Request gespeichert und anschließend an einen Lobby-Endpunkt weitergeleitet werden. Gleichzeitig gibt es eine MVC-Komponente, die zufällige Meme-Vorlagen aus einem definierten Ressourcenordner auswählt und im Frontend anzeigt.
+Bei diesem Projekt handelt es sich um eine Teilkomponente des Fake-It-Meme Systems, die einen einfachen Meme-Generator bereitstellt. Diese Komponente ermöglicht es den Spielern, ihre individuell beschrifteten Memes an die Lobby abzugeben, die diese an das Bewertungssystem weiter reicht.
 
 ## 1) Beschreibung der Funktion
 
@@ -8,7 +8,7 @@ Dieses Projekt stellt eine einfache Meme-Generator-Anwendung bereit, die sowohl 
   - **MemeApiController:** Nimmt per `POST /api/memes/save` ein Meme-Objekt (als JSON) entgegen und leitet es an den MemeSaver weiter.
   - **MemeSaver:** Verarbeitet das empfangene Meme, indem es einen HTTP-POST-Request an einen externen Lobby-Endpunkt (`/api/lobbyController/addMeme`) ausführt.
   
-- **Web-Frontend (MVC):**  
+- **Modell View Controller:**  
   - **MemeController:** Bedient GET-Anfragen an der Root (`/`) und ruft den MemeService auf, um einen zufälligen Meme-Pfad aus dem Ressourcenordner zu ermitteln.
   - **MemeService:** Wählt zufällig ein Bild (Meme-Vorlage) aus dem Ordner `src/main/resources/static/memeTemplates` aus und liefert den Pfad zurück.
 
@@ -20,7 +20,7 @@ Dieses Projekt stellt eine einfache Meme-Generator-Anwendung bereit, die sowohl 
 ### Voraussetzungen
 - Mindestens die Java **JDK 21** muss instaliert sein
 - **Maven** Projekt muss isntaliert werden
-- **Springboot** muss instaliert werden
+- **Springboot & Thymleaf** muss instaliert werden
 
 ### Schritte zur Installation
 1. **Repository klonen**
