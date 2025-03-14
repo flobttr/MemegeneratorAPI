@@ -18,27 +18,33 @@ Dieses Projekt stellt eine einfache Meme-Generator-Anwendung bereit, die sowohl 
 ## 2) Installation und Setup
 
 ### Voraussetzungen
-- **Mindestens die Java JDK 21 muss instaliert sein
-- **Maven** Projekt muss isntaliert werden 
-- Ein Webserver, der Spring Boot-Anwendungen ausführen kann
+- Mindestens die Java **JDK 21** muss instaliert sein
+- **Maven** Projekt muss isntaliert werden
+- **Springboot** muss instaliert werden
+- 
 
 ### Schritte zur Installation
 1. **Repository klonen**
 2. **Projekt öffnen**
-   - Dazu ist eine beliebige Umgebung erforderlich, die ein Sprinboot Projekt öffnen kann (Bsp.: VS Cod/ Intelij)
+   - Dazu ist eine beliebige Umgebung erforderlich, die ein Sprinboot Projekt öffnen kann (Bsp.: Intelij)
    - Über die Entwikclungsumgebung den Ordner öffen, indem das Repository abgelegt wurde, dann sollte sich das Projekt öffnen.
-   - Nun kann man unter ('src/main/java/com/example/MemegeneratorAPI')  die verschieden Java Klassen, aus denen sich das Backend zusammensetzt anschauen
-   - Unter dem Pfad ('src/main/resources/static findet man die css/html/js') Datein. Ebenfalls findet man auch die MemeTemplates in dem Ordner ('/memeTemplates') .
-   - Unter dem Pfad ('src/main/resources/templates)' wurde die "meme.html" abgelegt.
+   - Nun kann man unter (`src/main/java/com/example/MemegeneratorAPI`)  die verschieden Java Klassen, aus denen sich das Backend zusammensetzt anschauen
+   - Unter dem Pfad (`src/main/resources/static`) findet man die **css/html/js**  Datein. Ebenfalls findet man auch die MemeTemplates in dem Ordner ('/memeTemplates') .
+   - Unter dem Pfad (`src/main/resources/templates`) wurde die "meme.html" abgelegt.
    
 
 ## 3. Anleitung wie die Komponente zu bedienen ist
 ### Nutzung des Web-Frontends
+1. Starte die **MemegeneratorApiApplication** unter folgenden Pfad: (`src/main/java/com/example/MemegeneratorAPI/MemegeneratorApiApplication`)
+2. Mache im Verzeichnis in deiner Entwicklungsumgebung einen Rechtsklick auf **MemegeneratorApiApplication** und wähle **Run MemegeneratorApiApplication...main()** aus.
+3. Nun sollte unten in der Konsole das **SPRING** Zeichen geladen werden und dazu sollten verschiedene Start Meldungen geworfen werden.
+4. Wenn folgender Text : **Started MemegeneratorApiApplication in 4.007 seconds (process running for 15.763)** auftaucht, ist die Application normal gestartet
 
 ### Zufälliges Meme anzeigen:
 1. Rufe die Root-URL (`http://localhost:8080`) in deinem Browser auf.
 2. Der `MemeController` ruft den `MemeService` auf, der zufällig eine Meme-Vorlage auswählt.
 3. Das Meme wird im Frontend (über ein Thymeleaf-Template) angezeigt.
+4. Falls einem das MemeTemplate nicht gefällt, kann es über den Button **Gib mir was neues!** geändert werden. (MemeController ruft den MemeServie erneut auf)
 
 ### Meme erstellen und speichern:
 1. Bearbeite das angezeigte Meme im Browser (z. B. füge Beschriftungen hinzu).
