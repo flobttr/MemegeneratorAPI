@@ -21,7 +21,6 @@ Dieses Projekt stellt eine einfache Meme-Generator-Anwendung bereit, die sowohl 
 - Mindestens die Java **JDK 21** muss instaliert sein
 - **Maven** Projekt muss isntaliert werden
 - **Springboot** muss instaliert werden
-- 
 
 ### Schritte zur Installation
 1. **Repository klonen**
@@ -32,8 +31,7 @@ Dieses Projekt stellt eine einfache Meme-Generator-Anwendung bereit, die sowohl 
    - Unter dem Pfad (`src/main/resources/static`) findet man die **css/html/js**  Datein. Ebenfalls findet man auch die MemeTemplates in dem Ordner ('/memeTemplates') .
    - Unter dem Pfad (`src/main/resources/templates`) wurde die "meme.html" abgelegt.
    
-
-## 3. Anleitung wie die Komponente zu bedienen ist
+## 3) Anleitung wie die Komponente zu bedienen ist
 ### Nutzung des Web-Frontends
 1. Starte die **MemegeneratorApiApplication** unter folgenden Pfad: (`src/main/java/com/example/MemegeneratorAPI/MemegeneratorApiApplication`)
 2. Mache im Verzeichnis in deiner Entwicklungsumgebung einen Rechtsklick auf **MemegeneratorApiApplication** und wähle **Run MemegeneratorApiApplication...main()** aus.
@@ -50,20 +48,31 @@ Dieses Projekt stellt eine einfache Meme-Generator-Anwendung bereit, die sowohl 
 1. Bearbeite das angezeigte Meme im Browser (z. B. füge Beschriftungen hinzu).
 2. Klicke auf den **„Speichern“**-Button.
 3. Der JavaScript-Code in `save.js`:
-   - Konvertiert den Inhalt des Canvas in ein Bild (Data URL).
+   - Konvertiert den Inhalt des Canvas in ein Bild (Data URL) und dann in base64.
    - Liest Nutzer- und Lobby-Daten aus dem `localStorage`.
    - Erstellt ein Meme-Objekt.
 4. Dieses Objekt wird per `fetch`-API an den Endpunkt `/api/memes/save` gesendet.
 5. Der `MemeApiController` empfängt das Meme und leitet es über den `MemeSaver` an den Lobby-Endpunkt weiter.
 6. Bei erfolgreicher Speicherung erfolgt eine Weiterleitung zur Erfolgsseite.
 
+### Meme abgegeben 
+1. Nachdem man auf den Button **"Abgeben"** gedrückt hat, wird der Spieler auf eine html Seite geleite (**sucess.html**), auf der einfach ein Text Container dauerhaft von links nach rechts läuft.
+
+## 4.) Bekannte Probleme als auch Abweichungen vom ACD
+Im folgenden Kapitel werden zeurst Probleme, die im bestehenden Code noch auftreten, als auch Abweichungen zum ACD beschrieben.
+
+### Probleme
+1. Wenn man den Download Button betätigt, kann es sein, dass die Texte sich verschieben oder garnichtmehr auf dem Bild zu sehen sind. Dies liegt vermutlich am Format der Bilder.
+
+### Abweichungen 
+1. Thymleaf anstatt React => Thymleaf ist einfacher zu implementieren. Die Verwendung von React hätte den Rahmen dieses Portfolios übertroffen. Ebenso ist Thymleaf ein Framework, welches an der Funktionalität im Frontend nichts ändert.
+2. Keine Anbidung der WebSockts, da diese nur in einem zusammenhängenden System von Relevanz sind. Diese würde auch von der SST zur Lobby mitgegeben werden.
+3. Keine Einbindung der Microservices, da Dummy Schnittstellen implementiert wurden.
+4. Kein Aufsetzen einer Datenbank, da diese ebenfalls den Rahmen des Portfolios übertreffen würde. Deshalb arbeitet man nur mit Bildern, ^die lokal gespeichert sind.
 
 
 
 
 
-- Erweiterte Sicherheitsmaßnahmen, wie z. B. Authentifizierung, Autorisierung und HTTPS.
 
-#### Dokumentation und Tests:
-- Umfassende Dokumentation, Unit- und Integrationstests sowie automatisierte Deployment-Prozesse.
 
