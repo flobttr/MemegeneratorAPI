@@ -20,7 +20,7 @@ Bei diesem Projekt handelt es sich um eine Teilkomponente des Fake-It-Meme Syste
 ### Voraussetzungen
 - Mindestens die Java **JDK 21** muss instaliert sein
 - **Maven** Projekt muss isntaliert werden
-- **Springboot & Thymleaf** muss instaliert werden
+- **Springboot** muss instaliert werden
 
 ### Schritte zur Installation
 1. **Repository klonen**
