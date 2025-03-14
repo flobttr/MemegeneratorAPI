@@ -1,4 +1,4 @@
-package com.example.MemegeneratorAPI.controller;
+package com.example.MemegeneratorAPI.service;
 
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.ResponseEntity;

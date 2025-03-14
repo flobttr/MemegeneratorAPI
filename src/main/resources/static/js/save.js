@@ -7,6 +7,7 @@
 function saveMeme() {
     // Konvertiere den Canvas-Inhalt in einen Data-URL (als JPG)
     const dataURL = memeCanvas.toDataURL("image/jpg");
+    //alert(dataURL); //zeig an, wie das Bild in base64 Codierung aussieht
 
     // Hole und parse die gespeicherten Nutzerdaten aus dem localStorage
     const userData = localStorage.getItem("userData");
@@ -28,7 +29,7 @@ function saveMeme() {
     };
 
     // Sende das Meme-Objekt per POST an den Server-Endpunkt zum Speichern
-    fetch('/api/memes/save', {
+    fetch('/api/memes/^^', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
